@@ -46,16 +46,14 @@
             border: 2px solid #3d3d3d;
             overflow: hidden;
         }
-        /* Style for the flag images to make them display clearly at a uniform size */
         #flag-img {
-            max-width: 80%;
-            max-height: 75%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            border-radius: 4px;
+            max-width: 85%;
+            max-height: 80%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            border-radius: 6px;
         }
-        #flag-placeholder {
-            font-size: 100px;
-            line-height: 1;
+        .placeholder-text {
+            font-size: 6rem;
         }
         .btn {
             font-size: 1.6rem;
@@ -84,7 +82,7 @@
 
     <div class="flag-box">
         <div id="flag-display">
-            <span id="flag-placeholder">🏁</span>
+            <span class="placeholder-text">🏁</span>
         </div>
     </div>
 
@@ -93,6 +91,7 @@
 </div>
 
 <script>
+// The complete, definitive list of 195 sovereign countries
 const allCountryCodes = [
     "AF", "AL", "DZ", "AD", "AO", "AG", "AR", "AM", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BT",
     "BO", "BA", "BW", "BR", "BN", "BG", "BF", "BI", "CV", "KH", "CM", "CA", "CF", "TD", "CL", "CN", "CO", "KM", "CG", "CD",
@@ -104,19 +103,19 @@ const allCountryCodes = [
     "PT", "QA", "RO", "RU", "RW", "KN", "LC", "VC", "WS", "SM", "ST", "SA", "SN", "RS", "SC", "SL", "SG", "SK", "SI", "SB",
     "SO", "ZA", "SS", "ES", "LK", "SD", "SR", "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TL", "TG", "TO", "TT", "TN", "TR",
     "TM", "TV", "UG", "UA", "AE", "GB", "US", "UY", "UZ", "VU", "VA", "VE", "VN", "YE", "ZM", "ZW"
- */
+];
 
 let remainingFlags = [];
 let score = 0;
 let clockInterval;
 let flagInterval;
 let timeLeft = 120;
-const autoSpeed = 615; 
+const autoSpeed = 615; // Shuffles and completes all 195 flags inside 2 minutes
 
 function startGame() {
     remainingFlags = [...allCountryCodes];
     
-    // Shuffle
+    // Shuffle the deck randomly
     for (let i = remainingFlags.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [remainingFlags[i], remainingFlags[j]] = [remainingFlags[j], remainingFlags[i]];
@@ -161,7 +160,7 @@ function runAutoFlagCycle() {
     
     const currentCode = remainingFlags.pop().toLowerCase();
     
-    // Fetches vector flag graphic instead of using the browser's raw text fonts
+    // Inserts a clean, crisp flag image from a fast online image database
     document.getElementById('flag-display').innerHTML = 
         `<img id="flag-img" src="https://flagcdn.com/w320/${currentCode}.png" alt="flag">`;
 }
@@ -174,12 +173,12 @@ function endGame(isWin) {
     document.getElementById('start-btn').classList.remove('hidden');
     document.getElementById('start-btn').innerText = "START AGAIN";
     
-    document.getElementById('flag-display').innerHTML = '<span id="flag-placeholder">🏁</span>';
+    document.getElementById('flag-display').innerHTML = '<span class="placeholder-text">🏁</span>';
     
     if (isWin) {
-        alert("🏆 TIME UP! Run complete at world record pace!");
+        alert("🏆 TIME UP! He completed the full list at world record speed!");
     } else {
-        alert(`Stopped! Completed: ${score - 1}/195`);
+        alert(`Stopped! He finished ${score - 1}/195 flags.`);
     }
 }
 </script>
