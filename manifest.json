@@ -1,0 +1,9 @@
+{
+  "name": "Flag Record Trainer",
+  "short_name": "FlagTrainer",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f0f2f5",
+  "theme_color": "#28a745",
+  "orientation": "portrait"
+}
