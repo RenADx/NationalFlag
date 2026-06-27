@@ -12,6 +12,7 @@
             color: #ffffff;
             margin: 0;
             padding: 20px;
+            user-select: none;
         }
         .container {
             max-width: 500px;
@@ -57,7 +58,6 @@
             font-weight: bold;
             width: 100%;
             text-transform: uppercase;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
         #start-btn { background-color: #00cc66; color: white; }
         #stop-btn { background-color: #ff3333; color: white; }
@@ -83,7 +83,6 @@
 </div>
 
 <script>
-// The complete, definitive list of 195 sovereign countries (ISO-3166 Codes)
 const allCountryCodes = [
     "AF", "AL", "DZ", "AD", "AO", "AG", "AR", "AM", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE", "BZ", "BJ", "BT",
     "BO", "BA", "BW", "BR", "BN", "BG", "BF", "BI", "CV", "KH", "CM", "CA", "CF", "TD", "CL", "CN", "CO", "KM", "CG", "CD",
@@ -102,9 +101,7 @@ let score = 0;
 let clockInterval;
 let flagInterval;
 let timeLeft = 120;
-
-// 615 milliseconds per flag ensures all 195 flags flash exactly within 2 minutes (120 seconds)
-const autoSpeed = 615; 
+const autoSpeed = 615; // Displays 195 flags beautifully across 2 minutes
 
 function getFlagEmoji(countryCode) {
     return countryCode
@@ -117,7 +114,7 @@ function getFlagEmoji(countryCode) {
 function startGame() {
     remainingFlags = [...allCountryCodes];
     
-    // Perfect random Fisher-Yates shuffle
+    // Shuffle
     for (let i = remainingFlags.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [remainingFlags[i], remainingFlags[j]] = [remainingFlags[j], remainingFlags[i]];
@@ -128,16 +125,13 @@ function startGame() {
     
     document.getElementById('score').innerText = `0/${allCountryCodes.length}`;
     document.getElementById('timer').innerText = "02:00";
-    
     document.getElementById('start-btn').classList.add('hidden');
     document.getElementById('stop-btn').classList.remove('hidden');
     
     clearInterval(clockInterval);
     clearInterval(flagInterval);
     
-    // Synchronized Timers
     clockInterval = setInterval(updateClock, 1000);
-    
     runAutoFlagCycle();
     flagInterval = setInterval(runAutoFlagCycle, autoSpeed);
 }
@@ -176,12 +170,11 @@ function endGame(isWin) {
     document.getElementById('start-btn').innerText = "START AGAIN";
     
     if (isWin) {
-        alert("🏆 RECORD RUN COMPLETE! He matched the 2-minute record pace perfectly! 🎉");
+        alert("🏆 TIME UP! Pack complete at world record pace!");
     } else {
-        alert(`Run Stopped. He completed ${score - 1} flags.`);
+        alert(`Stopped! Completed: ${score - 1}/195`);
     }
 }
 </script>
-
 </body>
 </html>
